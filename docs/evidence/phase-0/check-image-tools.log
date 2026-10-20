@@ -1,0 +1,69 @@
+
+== Sistema ==
+  [INFO] Diretório: /home/bzaum/projetos/simpleos
+  [INFO] Kernel: Linux 5.15.0-198-generic x86_64
+  [INFO] Distribuição: Ubuntu 22.04.5 LTS
+
+== Ferramentas principais ==
+  [OK] gcc: /usr/bin/gcc
+  [OK] as: /usr/bin/as
+  [OK] ld: /usr/bin/ld
+  [OK] make: /usr/bin/make
+  [OK] git: /usr/bin/git
+  [OK] qemu-system-x86_64: /usr/bin/qemu-system-x86_64
+  [OK] curl: /usr/bin/curl
+  [OK] sha256sum: /usr/bin/sha256sum
+  [OK] readelf: /usr/bin/readelf
+  [OK] objdump: /usr/bin/objdump
+  [OK] nm: /usr/bin/nm
+  [OK] file: /usr/bin/file
+
+== Versões ==
+  GCC: gcc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+  Alvo GCC: x86_64-linux-gnu
+  Linker: GNU ld (GNU Binutils for Ubuntu) 2.38
+  Make: GNU Make 4.3
+  Git: git version 2.34.1
+  QEMU: QEMU emulator version 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.31)
+  GDB: GNU gdb (Ubuntu 12.1-0ubuntu1~22.04.2) 12.1
+
+== Compilação freestanding ==
+  [OK] GCC produz código para x86_64 (x86_64-linux-gnu)
+  [OK] Headers freestanding do GCC: /usr/lib/gcc/x86_64-linux-gnu/11/include
+  [OK] Compilação C freestanding com as flags do projeto
+
+== Git ==
+  [OK] Repositório Git: /home/bzaum/projetos/simpleos
+  [INFO] Branch: main
+  [INFO] Ainda não há commit inicial.
+
+== QEMU e firmware ==
+  [OK] QEMU suporta o acelerador kvm
+  [OK] QEMU suporta o acelerador tcg
+  [OK] /dev/kvm acessível para leitura e escrita
+  [OK] Firmware OVMF encontrado
+  [INFO] OVMF combinado: /usr/share/ovmf/OVMF.fd
+  [INFO] OVMF CODE: /usr/share/OVMF/OVMF_CODE.fd
+  [INFO] OVMF VARS: /usr/share/OVMF/OVMF_VARS.fd
+
+== Ferramentas de imagem ==
+  [FALTA] xorriso
+  [OK] mcopy: /usr/bin/mcopy
+  [OK] mformat: /usr/bin/mformat
+  [OK] sgdisk: /usr/sbin/sgdisk
+  [OK] mkfs.fat: /usr/sbin/mkfs.fat
+  [INFO] XORRISO é necessário para a ISO híbrida da Fase 1.
+  [INFO] Instalação prevista (não executada): sudo apt install xorriso
+
+== Ferramentas opcionais ==
+  [OK] gdb: /usr/bin/gdb
+  [INFO] nasm: ausente (opcional)
+  [INFO] clang: ausente (opcional)
+  [INFO] lld: ausente (opcional)
+  [OK] genisoimage: /usr/bin/genisoimage
+  [OK] python3: /usr/bin/python3
+  [OK] qemu-img: /usr/bin/qemu-img
+
+== Resumo ==
+Resultado: FALHOU — há requisitos obrigatórios ausentes.
+make: *** [Makefile:69: check-image-tools] Erro 1

@@ -1,0 +1,20 @@
+--- make kernel ---
+Este alvo pertence à Fase 1 e ainda não foi implementado.
+make: *** [Makefile:128: phase1-only] Erro 2
+exit=2
+--- make iso ---
+Este alvo pertence à Fase 1 e ainda não foi implementado.
+make: *** [Makefile:128: phase1-only] Erro 2
+exit=2
+--- make run ---
+Este alvo pertence à Fase 1 e ainda não foi implementado.
+make: *** [Makefile:128: phase1-only] Erro 2
+exit=2
+--- make run-uefi ---
+Este alvo pertence à Fase 1 e ainda não foi implementado.
+make: *** [Makefile:128: phase1-only] Erro 2
+exit=2
+--- make debug ---
+Este alvo pertence à Fase 1 e ainda não foi implementado.
+make: *** [Makefile:128: phase1-only] Erro 2
+exit=2

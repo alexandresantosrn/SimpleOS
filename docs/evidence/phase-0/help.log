@@ -1,0 +1,13 @@
+SimpleOS — alvos disponíveis na Fase 0:
+
+  make                  Verifica o ambiente e compila o smoke test.
+  make check-env        Verifica toolchain, Git, QEMU e ferramentas básicas.
+  make check-image-tools Verifica ferramentas exigidas para gerar a ISO.
+  make limine           Baixa, verifica e compila o Limine fixado.
+  make smoke            Compila o objeto freestanding de teste.
+  make test             Executa check-env e smoke.
+  make clean            Remove artefatos gerados, preservando downloads.
+  make distclean        Remove todo o diretório build/.
+  make print-config     Mostra as variáveis de build.
+
+Alvos da Fase 1 (ainda não implementados): kernel, iso, run, run-uefi, debug.

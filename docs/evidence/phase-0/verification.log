@@ -1,0 +1,60 @@
+Data: 2026-10-20T19:00:42-03:00
+Diretório: /home/bzaum/projetos/simpleos
+
+--- Git ---
+## No commits yet on main
+A  .gitignore
+A  AGENTS.md
+A  CHANGELOG.md
+A  Makefile
+A  README.md
+A  docs/ARCHITECTURE.md
+A  docs/BUILD.md
+AM docs/DEBUGGING.md
+A  docs/DECISIONS.md
+A  docs/ROADMAP.md
+AM docs/TEST_PLAN.md
+AM docs/THIRD_PARTY.md
+AM docs/evidence/phase-0/README.md
+A  docs/evidence/phase-0/baseline.sha256
+A  docs/evidence/phase-0/check-env.log
+A  docs/evidence/phase-0/check-image-tools.log
+A  docs/evidence/phase-0/clean.log
+A  docs/evidence/phase-0/final-test.log
+A  docs/evidence/phase-0/help.log
+A  docs/evidence/phase-0/limine-rerun.log
+A  docs/evidence/phase-0/limine-usage.log
+A  docs/evidence/phase-0/limine-version.log
+A  docs/evidence/phase-0/limine.log
+A  docs/evidence/phase-0/make-all.log
+A  docs/evidence/phase-0/phase1-targets.log
+A  docs/evidence/phase-0/print-config.log
+A  docs/evidence/phase-0/smoke.log
+A  docs/evidence/phase-0/test.log
+AM docs/evidence/phase-0/verification.log
+A  tests/toolchain-smoke.c
+A  third_party/limine-protocol/LICENSE
+A  third_party/limine-protocol/include/limine.h
+A  tools/check-env.sh
+A  tools/fetch-limine.sh
+?? docs/evidence/phase-0/qemu-bios-smoke.log
+?? third_party/limine-protocol/README.md
+
+--- Arquivos de kernel/ISO (esperado: nenhum) ---
+
+--- Hashes dos artefatos ---
+847334bc4bc142de996fbd132806b89ed73ac9ab34dbc1e90cfebf1fcc68c2b1  build/downloads/limine-binary-12.9.4.tar.gz
+524eef1e17b322f21d7282b3c31b56c8616318bebe80653a3a771f6cba92bf15  build/limine-binary/limine
+0aadf2633c85d8cb145344c968add158aeb1deb68af567d55ba8431c492b6d4c  third_party/limine-protocol/include/limine.h
+e2b1c35814afb22acbddf7ff567d2b05a467e503628ffea62752bc1f3fa2595c  third_party/limine-protocol/LICENSE
+3e69bad515ddc7211e6022a54e6d3b64f82c5a203129d5e2181db5617db94562  build/smoke/toolchain-smoke.o
+
+--- Baseline original (não deve ser alterado) ---
+98bfde32831ca540dad83de6e0becc567b1dede70a589910619b3b44e434cfe6  AGENTS.md
+546833d9efca9b7bf701d8912aa9e83dd60e4c194ed6781d80d8607542233bf6  README.md
+4c8fbd67c42a367d93087a94fcb25a830a6599577e87003aedce4f8ccaa03cc5  CHANGELOG.md
+56f8c2125d4fb07c7fa11cec0577e7e3fdaf465cb82feed2ed75a2f5df6bdb6e  docs/ARCHITECTURE.md
+f2d14ca6df999075d2750fb8370f18dd3602f6b0da205d75c731253a226ca275  docs/DEBUGGING.md
+9c0a64539059970d6255c96189a7a648b13447446028ee9d30fe1c4b34a34a95  docs/DECISIONS.md
+419b176be32d0ba32c041da182c0330aa6af9fff1843ef2ad9c5d4df8519f327  docs/ROADMAP.md
+9cc6a71a444556de5068532a990691754ac775f8ceb11e1b09df78c2cd235734  docs/TEST_PLAN.md

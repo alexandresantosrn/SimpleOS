@@ -1,0 +1,20 @@
+# Artefatos de build e downloads locais
+/build/
+
+# Arquivos gerados por ferramentas locais
+compile_commands.json
+.cache/
+
+# Editores e sistema operacional
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Imagens e binários que nunca devem ser versionados por acidente
+*.iso
+*.hdd
+*.img
+*.o
+*.elf
+*.map

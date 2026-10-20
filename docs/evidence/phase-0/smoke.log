@@ -1,0 +1,8 @@
+gcc -std=gnu11 -O2 -g -Wall -Wextra -ffreestanding -fno-stack-protector -fno-stack-clash-protection -fno-common -fno-PIC -fno-pie -ffunction-sections -fdata-sections -m64 -march=x86-64 -mno-red-zone -mcmodel=kernel -mno-mmx -mno-sse -mno-80387 -fcf-protection=none -nostdinc -isystem /usr/lib/gcc/x86_64-linux-gnu/11/include -Ithird_party/limine-protocol/include -c tests/toolchain-smoke.c -o build/smoke/toolchain-smoke.o
+
+Smoke test: build/smoke/toolchain-smoke.o
+build/smoke/toolchain-smoke.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), with debug_info, not stripped
+  Class:                             ELF64
+  Type:                              REL (Relocatable file)
+  Machine:                           Advanced Micro Devices X86-64
+OK: nenhum símbolo indefinido no objeto de teste.

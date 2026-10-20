@@ -1,0 +1,10 @@
+usage: ./build/limine-binary/limine <command> <args...>
+
+    --print-datadir   Print the directory containing the bootloader files
+
+    --version         Print the Limine version (like the `version` command)
+
+    --help | -h       Display this help message
+
+Commands: `help`, `version`, `bios-install`, `enroll-config`
+Use `--help` after specifying the command for command-specific help.

@@ -1,0 +1,2 @@
+rm -rf "build/smoke" "build/iso_root"
+rm -f "build"/*.iso "build"/*.hdd "build/kernel.elf"

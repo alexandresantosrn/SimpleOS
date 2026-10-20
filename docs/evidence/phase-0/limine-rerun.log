@@ -1,0 +1,11 @@
+Tarball já existe: build/downloads/limine-binary-12.9.4.tar.gz
+build/downloads/limine-binary-12.9.4.tar.gz: SUCESSO
+Compilando o utilitário limine para o host...
+make[1]: Entrando no diretório '/home/bzaum/projetos/simpleos/build/limine-binary'
+cc -g -O2 -pipe -std=c99 -D_FILE_OFFSET_BITS=64   limine.c  -o limine
+make[1]: Saindo do diretório '/home/bzaum/projetos/simpleos/build/limine-binary'
+
+Limine 12.9.4 pronto.
+  Diretório: build/limine-binary
+  Utilitário: build/limine-binary/limine
+  SHA-256 do tarball: 847334bc4bc142de996fbd132806b89ed73ac9ab34dbc1e90cfebf1fcc68c2b1
