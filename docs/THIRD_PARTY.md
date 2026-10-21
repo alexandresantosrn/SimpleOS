@@ -40,6 +40,14 @@ XORRISO são ferramentas do ambiente hospedeiro, não são incorporadas ao
 kernel. As versões verificadas estão em `docs/BUILD.md` e nas evidências da
 Fase 0.
 
+| Ferramenta | Versão instalada | Uso no projeto | Incorporada? |
+|---|---|---|---|
+| XORRISO | 1.5.4-2 | Criação da ISO híbrida BIOS/UEFI | Não |
+
+O pacote `xorriso` depende de `libisoburn1 1.5.4-2`, `libburn4 1.5.4-1`,
+`libisofs6 1.5.4-1` e `libjte2 1.22-3build1`; essas bibliotecas também são
+componentes do ambiente hospedeiro e não são distribuídas com o kernel.
+
 ## Licença do SimpleOS
 
 A licença do código do SimpleOS ainda não foi definida. Essa decisão está

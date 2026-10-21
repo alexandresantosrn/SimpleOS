@@ -65,13 +65,15 @@ Registre:
 
 Corrija a causa inicial antes de tentar resolver erros em cascata.
 
-## 8. Problemas conhecidos do ambiente (Fase 0)
+## 8. Ambiente e problemas conhecidos (Fase 0)
 
-### 8.1 XORRISO ausente
+### 8.1 XORRISO instalado
 
-`make check-image-tools` falha com `[FALTA] xorriso`. A geração da ISO híbrida
-não pode ser testada até que o pacote seja instalado com autorização explícita
-ou que uma estratégia alternativa de imagem seja aprovada.
+O `xorriso 1.5.4-2` foi instalado com autorização em 20/10/2026. O comando
+`make check-image-tools` agora termina com
+`Resultado: OK — requisitos verificados.` A ISO híbrida ainda não foi gerada;
+qualquer falha de geração ou de boot pertence à Fase 1 e deve ser registrada
+com o comando exato e o log correspondente.
 
 ### 8.2 GCC com PIE e `-mcmodel=kernel`
 

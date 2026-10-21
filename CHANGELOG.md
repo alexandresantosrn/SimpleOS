@@ -7,7 +7,6 @@ O formato segue uma adaptação de [Keep a Changelog](https://keepachangelog.com
 ## [Não lançado]
 
 ### Planejado
-- Preparar ambiente e estrutura do repositório.
 - Validar inicialização mínima pelo Limine no QEMU.
 - Implementar terminal, teclado e shell.
 - Implementar sistema de arquivos em memória.
@@ -28,15 +27,19 @@ O formato segue uma adaptação de [Keep a Changelog](https://keepachangelog.com
 - Documentação de build em `docs/BUILD.md`, registro de terceiros em
   `docs/THIRD_PARTY.md` e evidências em `docs/evidence/phase-0/`.
 - Repositório Git inicializado na branch `main`.
+- XORRISO 1.5.4-2 instalado com autorização, com as dependências
+  `libisoburn1`, `libburn4`, `libisofs6` e `libjte2`.
+- Commit de código da Fase 0 `89a60b5` e teste de clone limpo aprovado.
 
 ### Alterado
-- README atualizado com o estado real da Fase 0, comandos disponíveis e
-  pendência de XORRISO.
-- Documentação de arquitetura, decisões, roadmap e plano de testes atualizada
-  com as decisões e evidências da Fase 0.
+- README atualizado com a Fase 0 concluída, comandos disponíveis e XORRISO
+  instalado.
+- Documentação de build, decisões, roadmap, plano de testes, terceiros e
+  depuração atualizada com o XORRISO 1.5.4-2 e o teste de clone limpo.
 
 ### Corrigido
-- Nenhuma correção registrada.
+- Removida a alegação de fallback documentado para Limine 12.9.3, que não
+  possuía procedimento correspondente.
 
 ### Segurança
 - Nenhuma mudança registrada.

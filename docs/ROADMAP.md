@@ -1,6 +1,6 @@
 # Roadmap do SimpleOS
 
-**Estado inicial:** nenhuma fase considerada concluída.
+**Estado atual:** Fase 0 concluída em 20/10/2026; Fase 1 não iniciada.
 
 ## Estados permitidos
 
@@ -13,12 +13,13 @@ Uma fase só pode ser marcada como concluída quando seus critérios de aceite f
 
 ## Fase 0 — Ambiente e repositório
 
-**Estado:** Em andamento.
+**Estado:** Concluída em 20/10/2026.
 
 **Objetivo:** build reproduzível e ferramentas identificadas.
 
 - [x] Verificar toolchain, linker, Make, Git, QEMU e ferramentas de imagem.
-  - Ferramentas principais verificadas; XORRISO ausente e pendente de autorização.
+  - Ferramentas principais verificadas; XORRISO 1.5.4-2 instalado e
+    `make check-image-tools` aprovado.
 - [x] Fixar versão do Limine.
   - Limine 12.9.4, SHA-256 e header do protocolo fixados.
 - [x] Criar estrutura do projeto e documentação.
@@ -32,10 +33,16 @@ Uma fase só pode ser marcada como concluída quando seus critérios de aceite f
 
 **Critério operacional registrado:** a Fase 0 cobre toolchain, estrutura,
 Limine, smoke test e documentação; a geração de imagem e o boot de kernel
-pertencem à Fase 1. O aceite ainda depende de:
+pertencem à Fase 1. O aceite foi atendido com:
 
-- instalar o XORRISO com autorização explícita ou aprovar a alternativa HDD;
-- revisar e commitar a Fase 0 para permitir o teste de clone limpo.
+- XORRISO 1.5.4-2 instalado com autorização explícita;
+- `make check-image-tools` e `make test` aprovados;
+- commit de código `89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b`;
+- clone limpo validado com `make test`, `make check-image-tools`, `make limine`
+  e `limine version`.
+
+A ISO híbrida ainda não foi gerada e o boot de kernel continua sendo aceite da
+Fase 1.
 
 **Evidências:** `docs/evidence/phase-0/`.
 
@@ -138,7 +145,7 @@ pertencem à Fase 1. O aceite ainda depende de:
 
 | Fase | Estado | Evidência / observações |
 |---|---|---|
-| 0 — Ambiente | Em andamento | Estrutura e testes em `docs/evidence/phase-0/`; XORRISO e commit pendentes |
+| 0 — Ambiente | Concluída | Commit de código `89a60b5`; clone limpo e XORRISO 1.5.4-2 aprovados; evidências em `docs/evidence/phase-0/` |
 | 1 — Boot mínimo | Não iniciada | |
 | 2 — Diagnóstico | Não iniciada | |
 | 3 — Terminal | Não iniciada | |

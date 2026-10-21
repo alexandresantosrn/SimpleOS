@@ -27,8 +27,8 @@ Para cada execução relevante, registrar:
 
 | Fase | Teste | Resultado esperado | Estado inicial |
 |---|---|---|---|
-| 0 | Verificação das ferramentas | Versões e dependências registradas | Aprovado com ressalva: XORRISO ausente |
-| 0 | Build em clone limpo | Reproduzível conforme README | Não executado: requer commit |
+| 0 | Verificação das ferramentas | Versões e dependências registradas | Aprovado |
+| 0 | Build em clone limpo | Reproduzível conforme README | Aprovado no commit de código `89a60b5` |
 | 1 | Boot pelo Limine no QEMU | Kernel mostra mensagem inicial | Não executado |
 | 1 | Caminho de kernel incorreto | Erro identificável; não declarar sucesso | Não executado |
 | 2 | Registro do mapa de memória | Informações válidas, sem acesso indevido | Não executado |
@@ -51,25 +51,28 @@ Para cada execução relevante, registrar:
 ### 3.1 Resultados da Fase 0 — 20/10/2026
 
 Ambiente: Ubuntu 22.04.5 LTS, x86-64, GCC 11.4.0, binutils 2.38,
-GNU Make 4.3, Git 2.34.1, QEMU 6.2.0, GDB 12.1, OVMF 2022.02.
+GNU Make 4.3, Git 2.34.1, QEMU 6.2.0, GDB 12.1, OVMF 2022.02,
+XORRISO 1.5.4-2.
 
 | ID | Teste | Comando | Esperado | Observado | Estado | Evidência |
 |---|---|---|---|---|---|---|
 | T0.1 | Baseline dos documentos | `sha256sum ... > baseline.sha256` | Hashes originais registrados | Arquivo criado antes das alterações | Aprovado | `docs/evidence/phase-0/baseline.sha256` |
-| T0.2 | Verificação principal | `make check-env` | Exit 0; versões registradas | Exit 0; aviso de XORRISO ausente | Aprovado com ressalva | `check-env.log` |
+| T0.2 | Verificação principal | `make check-env` | Exit 0; versões registradas | Exit 0; todas as ferramentas obrigatórias presentes | Aprovado | `test-after-xorriso.log` |
 | T0.3 | Limine fixado | `make limine` | SHA-256 confere e utilitário compila | Hash conferiu; `limine` compilado | Aprovado | `limine.log` |
 | T0.4 | Versão do Limine | `limine version` | `Limine 12.9.4` | `Limine 12.9.4` | Aprovado | `limine-version.log` |
 | T0.5 | Header do protocolo | `sha256sum limine.h` | Hash `0aadf...` | Hash confere | Aprovado | `verification.log` |
 | T0.6 | Smoke freestanding | `make smoke` | ELF64 x86-64, sem símbolos indefinidos | Confirmado | Aprovado | `smoke.log` |
 | T0.7 | Limpeza segura | `make clean` | Docs preservados; smoke removido | Confirmado | Aprovado | `clean.log`, `verification.log` |
 | T0.8 | Alvos da Fase 1 | `make kernel`, `make iso`, `make run`, `make run-uefi`, `make debug` (cada um separadamente) | Falha clara, sem implementação | Exit 2 com mensagem | Aprovado | `phase1-targets.log` |
-| T0.9 | Ferramentas de imagem | `make check-image-tools` | Todas presentes | Falhou: XORRISO ausente | Bloqueado | `check-image-tools.log` |
-| T0.10 | Clone limpo | `git clone` + `make test` | Mesmo resultado | Não executado: sem commit | Não executado | — |
-| T0.11 | Boot do Limine no QEMU | ISO + QEMU | Menu/boot do Limine | Não executado: XORRISO ausente e Fase 1 | Não executado | — |
+| T0.9 | Ferramentas de imagem | `make check-image-tools` | Todas presentes | `Resultado: OK — requisitos verificados.` | Aprovado | `check-image-tools-after-xorriso.log` |
+| T0.10 | Clone limpo | `git clone` + `make test`, `make check-image-tools`, `make limine`, `limine version` | Mesmo resultado | Commit de código `89a60b5`; todos os alvos passaram; `Limine 12.9.4` | Aprovado | `clean-clone-phase0.log` |
+| T0.11 | Boot do Limine no QEMU | ISO + QEMU | Menu/boot do Limine | Não executado: Fase 1 não iniciada; nenhuma ISO gerada | Não executado | — |
 | T0.12 | Inicialização do QEMU sem mídia | `timeout 8s qemu-system-x86_64 ...` | Processo inicia e é encerrado | Exit 124 por timeout; não valida boot | Informativo | `qemu-bios-smoke.log` |
+| T0.13 | Instalação do XORRISO | `command -v xorriso`, `xorriso --version`, `dpkg-query` | Ferramenta e dependências instaladas | `xorriso 1.5.4-2`; dependências presentes | Aprovado | `xorriso-installed.log` |
 
-**Conclusão:** a Fase 0 está em andamento, não concluída. O smoke test valida
-compilação freestanding, mas não valida linkedição, linker script ou boot.
+**Conclusão:** a Fase 0 está concluída no commit de código `89a60b5`. O smoke test valida
+compilação freestanding, mas não valida linkedição, linker script, geração de
+ISO ou boot; esses itens pertencem à Fase 1.
 
 ## 4. Testes de parser e sistema de arquivos
 

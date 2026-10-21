@@ -2,7 +2,7 @@
 
 Sistema operacional educacional x86-64, desenvolvido majoritariamente em C, com inicialização pelo Limine e testes iniciais no QEMU.
 
-> **Estado atual:** Fase 0 em andamento. A estrutura de build, a verificação de ambiente e a pinagem do Limine foram preparadas. O kernel ainda não foi implementado e nenhum boot de kernel foi validado.
+> **Estado atual:** Fase 0 concluída em 20/10/2026. A estrutura de build, a verificação de ambiente, a pinagem do Limine e as ferramentas de imagem estão preparadas. A Fase 1 ainda não foi iniciada; o kernel não foi implementado e nenhum boot de kernel foi validado.
 
 ## Objetivos
 
@@ -57,7 +57,7 @@ As versões verificadas e os comandos exatos estão em `docs/BUILD.md`. O ambien
 - GDB 12.1 para depuração.
 - Limine 12.9.4 fixado por versão e SHA-256.
 - mtools, dosfstools e `sgdisk` para futuras imagens de disco.
-- **XORRISO ausente**, necessário para gerar a ISO híbrida da Fase 1. A instalação depende de autorização explícita.
+- XORRISO 1.5.4-2, necessário para gerar a ISO híbrida da Fase 1.
 
 Não presuma que as versões disponíveis no sistema hospedeiro são compatíveis sem verificar.
 
@@ -72,7 +72,7 @@ make test             # equivalente a check-env + smoke
 make check-env        # verifica ferramentas e versões
 make limine           # baixa, verifica e compila o Limine fixado
 make smoke            # compila o objeto freestanding de teste
-make check-image-tools # exige XORRISO; atualmente falha por ausência
+make check-image-tools # verifica XORRISO e ferramentas de imagem
 make clean            # remove artefatos gerados conhecidos
 ```
 

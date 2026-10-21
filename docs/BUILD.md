@@ -1,7 +1,8 @@
 # Build e ambiente — SimpleOS
 
-**Estado:** Fase 0 em andamento. O kernel ainda não foi implementado e nenhum
-boot de kernel foi validado.
+**Estado:** Fase 0 concluída em 20/10/2026. O kernel ainda não foi implementado,
+nenhuma ISO foi gerada e nenhum boot de kernel foi validado; esses itens
+pertencem à Fase 1.
 
 Este documento descreve o que já funciona na Fase 0, as versões verificadas e
 os comandos exatos. A geração da imagem e o boot pertencem à Fase 1.
@@ -37,12 +38,24 @@ Verificação executada em 20/10/2026:
 | mtools | 4.0.32 | OK |
 | dosfstools | 4.2 | OK |
 | `sgdisk` | 1.0.8 | OK |
-| XORRISO | ausente | **pendente para gerar ISO** |
+| XORRISO | 1.5.4-2, `/usr/bin/xorriso` | OK |
 | NASM | ausente | opcional; não usado |
 | Clang/LLD | ausentes | opcional; não usados |
 
 O GCC nativo do Ubuntu é usado como compilador freestanding. Não é necessário
 um compilador cruzado `x86_64-elf` para esta fase.
+
+O XORRISO foi instalado com autorização explícita em 20/10/2026. O pacote
+`xorriso 1.5.4-2` trouxe as dependências `libisoburn1 1.5.4-2`,
+`libburn4 1.5.4-1`, `libisofs6 1.5.4-1` e `libjte2 1.22-3build1`. O comando
+registrado no histórico do APT foi:
+
+```sh
+sudo apt-get install -y xorriso
+```
+
+A ferramenta é necessária para criar a ISO híbrida BIOS/UEFI; não é necessária
+para compilar o kernel nem para executar o QEMU.
 
 ## 3. Comandos da Fase 0
 
@@ -62,9 +75,15 @@ o Git, o QEMU, o OVMF e as ferramentas de imagem. Não instala nada e não usa
 make check-image-tools
 ```
 
-Este alvo exige XORRISO, mtools, `sgdisk` e `dosfstools`. No ambiente atual ele
-falha porque o XORRISO não está instalado. A instalação não é feita
-automaticamente.
+Este alvo exige XORRISO, mtools, `sgdisk` e `dosfstools`. No ambiente atual
+todos os requisitos estão presentes e o comando termina com:
+
+```text
+Resultado: OK — requisitos verificados.
+```
+
+O alvo não instala pacotes. A instalação do XORRISO foi feita separadamente,
+com autorização explícita, conforme a seção 2.
 
 ### 3.3 Baixar e compilar o Limine
 

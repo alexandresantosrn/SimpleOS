@@ -1,0 +1,39 @@
+Data: 2026-10-20T21:04:58-03:00
+Commit: 89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b
+
+=== LOCALIZAÇÃO ===
+/usr/bin/xorriso
+
+=== VERSÃO ===
+xorriso 1.5.4 : RockRidge filesystem manipulator, libburnia project.
+
+xorriso 1.5.4
+ISO 9660 Rock Ridge filesystem manipulator and CD/DVD/BD burn program
+Copyright (C) 2019, Thomas Schmitt <scdbackup@gmx.net>, libburnia project.
+xorriso version   :  1.5.4
+Version timestamp :  2021.01.30.150001
+Build timestamp   :  -none-given-
+
+=== PACOTE ===
+xorriso 1.5.4-2 install ok installed
+
+=== DEPENDÊNCIAS ===
+libisoburn1 1.5.4-2 install ok installed
+libburn4 1.5.4-1 install ok installed
+libisofs6 1.5.4-1 install ok installed
+libjte2 1.22-3build1 install ok installed
+
+=== APT POLICY ===
+xorriso:
+  Instalado: 1.5.4-2
+  Candidato: 1.5.4-2
+  Tabela de versão:
+ *** 1.5.4-2 500
+        500 http://br.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages
+        100 /var/lib/dpkg/status
+
+=== APT HISTORY ===
+Start-Date: 2026-10-20  20:59:54
+Commandline: apt-get install -y xorriso
+Install: libisofs6:amd64 (1.5.4-1, automatic), libisoburn1:amd64 (1.5.4-2, automatic), libjte2:amd64 (1.22-3build1, automatic), xorriso:amd64 (1.5.4-2), libburn4:amd64 (1.5.4-1, automatic)
+End-Date: 2026-10-20  21:00:03

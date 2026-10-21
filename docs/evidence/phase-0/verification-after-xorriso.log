@@ -1,0 +1,47 @@
+Data: 2026-10-20T22:35:07-03:00
+Commit: 89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b
+
+=== GIT STATUS ===
+## main
+ M CHANGELOG.md
+ M README.md
+ M docs/BUILD.md
+ M docs/DEBUGGING.md
+ M docs/DECISIONS.md
+ M docs/ROADMAP.md
+ M docs/TEST_PLAN.md
+ M docs/THIRD_PARTY.md
+ M docs/evidence/phase-0/README.md
+?? docs/evidence/phase-0/check-image-tools-after-xorriso.log
+?? docs/evidence/phase-0/clean-clone-phase0.log
+?? docs/evidence/phase-0/test-after-xorriso.log
+?? docs/evidence/phase-0/verification-after-xorriso.log
+?? docs/evidence/phase-0/xorriso-installed.log
+
+=== HASHES DA DOCUMENTAÇÃO (ESTADO ATUAL) ===
+cda6e4987e827a1927516b0dfd6122a3f5d5dd10eddd8a29a365e83046f43f92  README.md
+241cf09d5b877c6c71be860dd7d3eaaec75535fdf24c826ec1ad8acabfe84e42  docs/BUILD.md
+fc97c38a3a1cc0292416fcf6a38b078a112a3558846f0c0fe2ac1da3733ba306  docs/ROADMAP.md
+f144d8027beff615783e71b8fc1270a35a0bb79a10b4a6d9aa54ae1528c77cf0  docs/TEST_PLAN.md
+0c31484099c690dedd0f964698c72b9563dab9c7a997f3adaffee77fa04727f7  docs/DECISIONS.md
+d0c8121e3a4c273b96c2b688d60f037ff3edfeac7bc441b373d78d2824abb44b  docs/THIRD_PARTY.md
+8f5f51e3c799ef06aca781b756303395f8b228d9a2bd9c5a011ddc1878ff19d7  docs/DEBUGGING.md
+1a66ae34315e12068f36181cbb872aa90e7c6cac1b3717f0c8914de876a5dbd0  CHANGELOG.md
+d5046cdc6e168dd0c8eb7db1c8f5286736f9bbc92c0ecebe43dfc284f1cb950d  docs/evidence/phase-0/README.md
+
+=== XORRISO ===
+xorriso 1.5.4 : RockRidge filesystem manipulator, libburnia project.
+
+xorriso 1.5.4
+ISO 9660 Rock Ridge filesystem manipulator and CD/DVD/BD burn program
+Copyright (C) 2019, Thomas Schmitt <scdbackup@gmx.net>, libburnia project.
+
+=== RESULTADO DAS FERRAMENTAS DE IMAGEM ===
+
+== Resumo ==
+Resultado: OK — requisitos verificados.
+
+=== RESULTADO DO MAKE TEST ===
+  Type:                              REL (Relocatable file)
+  Machine:                           Advanced Micro Devices X86-64
+OK: nenhum símbolo indefinido no objeto de teste.

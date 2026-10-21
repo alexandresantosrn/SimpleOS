@@ -95,7 +95,7 @@ Para cada decisão, documente:
 
 **Alternativas:** compilar o Limine a partir do código-fonte, exigindo NASM e mais ferramentas; usar a URL `latest`, que não é reproduzível.
 
-**Consequências:** build reproduzível e sem necessidade de NASM; a versão 12.9.4 é recente e tem fallback documentado para 12.9.3.
+**Consequências:** build reproduzível e sem necessidade de NASM. A versão 12.9.4 é a única fixada; qualquer fallback exigirá nova decisão, verificação de hash e atualização da documentação.
 
 **Evidência:** `make limine`, verificação de SHA-256 e `limine version` em `docs/evidence/phase-0/`.
 
@@ -143,17 +143,17 @@ Para cada decisão, documente:
 
 ## ADR-0010 — Geração da imagem
 
-**Estado:** Proposta
+**Estado:** Aprovada para a Fase 1
 
-**Contexto:** a estratégia de imagem depende do XORRISO, que não está instalado.
+**Contexto:** a estratégia de imagem precisa permitir boot BIOS e UEFI no QEMU; o XORRISO foi autorizado e instalado.
 
-**Decisão proposta:** usar ISO híbrida BIOS/UEFI com `limine-bios-cd.bin`, `limine-uefi-cd.bin`, `limine-bios.sys`, `BOOTX64.EFI` e `limine bios-install`.
+**Decisão:** usar ISO híbrida BIOS/UEFI com `limine-bios-cd.bin`, `limine-uefi-cd.bin`, `limine-bios.sys`, `BOOTX64.EFI` e `limine bios-install`, conforme o procedimento oficial do Limine 12.9.4.
 
-**Alternativas:** imagem HDD com mtools + `sgdisk` + FAT, sem instalar XORRISO.
+**Alternativas:** imagem HDD com mtools + `sgdisk` + FAT, sem depender do XORRISO. A alternativa continua viável e será útil para persistência, mas exige mais etapas de particionamento e formatação.
 
-**Consequências:** a ISO é o caminho oficial mais simples, mas exige autorização para instalar `xorriso`; a imagem HDD é mais trabalhosa e será necessária para persistência.
+**Consequências:** a ISO é o caminho oficial mais simples para o primeiro boot; exige o pacote `xorriso 1.5.4-2`, que foi instalado com autorização. A aprovação não valida a ISO: geração e boot continuam sendo testes da Fase 1.
 
-**Evidência:** ainda não há; a instalação e o teste pertencem à Fase 1.
+**Evidência:** `xorriso 1.5.4-2`, `make check-image-tools` aprovado e teste de clone limpo em `docs/evidence/phase-0/`.
 
 ## ADR-0011 — Licença do projeto
 
@@ -167,13 +167,13 @@ Para cada decisão, documente:
 
 ## ADR-0012 — Commits e publicação
 
-**Estado:** Pendente
+**Estado:** Aprovada para commit local; push pendente de autorização
 
-**Contexto:** a Fase 0 foi executada, mas não há autorização para commit ou push.
+**Contexto:** a Fase 0 e suas atualizações documentais foram revisadas e são mantidas em commit local, sem remote configurado.
 
-**Decisão proposta:** permitir um commit local da Fase 0 após revisão; push e publicação exigem autorização separada.
+**Decisão:** manter a Fase 0 em commit local e deixar push/publicação sujeitos a autorização separada.
 
-**Consequências:** as evidências ainda não têm um identificador de commit; o teste de clone limpo permanece não executado.
+**Consequências:** as evidências têm o identificador do commit de código `89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b` e o clone limpo foi validado. A documentação e as evidências foram adicionadas em commit local separado. Nenhum push foi feito.
 
 ## Decisões pendentes
 
@@ -185,7 +185,8 @@ Para cada decisão, documente:
 - [ ] Gerenciamento de memória. — Fase 2.
 - [ ] Interface de bloco e dispositivo virtual. — Fase 7.
 - [ ] Sistema de arquivos persistente e subconjunto suportado. — Fase 7.
-- [ ] Formato da imagem e procedimento de boot USB. — ISO proposta; XORRISO pendente.
-- [ ] Instalação do XORRISO. — requer autorização explícita.
+- [x] Formato da imagem inicial. — ISO híbrida BIOS/UEFI aprovada para a Fase 1.
+- [ ] Procedimento de boot USB físico. — Fase 8.
+- [x] Instalação do XORRISO. — `xorriso 1.5.4-2` instalado e verificado.
 - [ ] Licença do projeto. — ADR-0011.
-- [ ] Commit inicial e teste de clone limpo. — ADR-0012.
+- [x] Commit inicial e teste de clone limpo. — commit de código `89a60b5`; clone limpo aprovado; push pendente.
