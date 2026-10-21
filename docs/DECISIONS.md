@@ -171,13 +171,13 @@ Para cada decisão, documente:
 
 ## ADR-0012 — Commits e publicação
 
-**Estado:** Aprovada para commit local; push pendente de autorização
+**Estado:** Aprovada; push inicial realizado manualmente
 
-**Contexto:** a Fase 0 está em commits locais. O remote `origin` foi configurado e o `LICENSE` remoto foi incorporado por merge; o push será executado manualmente pelo usuário.
+**Contexto:** a Fase 0 está em commits locais e o remote `origin` foi configurado. O `LICENSE` remoto foi incorporado por merge, e o push inicial foi executado manualmente em 21/10/2026.
 
-**Decisão:** manter os commits locais e deixar o push/publicação sob controle manual, sem automação e sem execução pelo agente.
+**Decisão:** manter a sincronização sob controle manual. Novos commits só serão publicados por meio de `git push` executado explicitamente.
 
-**Consequências:** o commit de código `89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b` e o merge `e2b39af` estão no histórico local; o clone limpo foi validado. O `origin/main` ainda aponta para o commit remoto anterior, e nenhum push foi feito. As adaptações documentais de licença estão no working tree e precisam ser commitadas antes do push manual.
+**Consequências:** o push inicial publicou `2c222b1`, que era o `HEAD` local na ocasião. O upstream está configurado e a árvore de trabalho estava limpa após o push. O clone limpo foi validado e o commit de código `89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b` permanece no histórico. Nenhuma automação de push foi criada.
 
 ## Decisões pendentes
 
@@ -194,4 +194,4 @@ Para cada decisão, documente:
 - [x] Instalação do XORRISO. — `xorriso 1.5.4-2` instalado e verificado.
 - [x] Licença do projeto. — MIT; `LICENSE` na raiz.
 - [x] Commit inicial e teste de clone limpo. — commit de código `89a60b5`; clone limpo aprovado.
-- [ ] Push para `origin` — manual, pendente de execução pelo usuário.
+- [x] Push inicial para `origin` — concluído manualmente em 21/10/2026.

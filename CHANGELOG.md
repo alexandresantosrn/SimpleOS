@@ -31,8 +31,8 @@ O formato segue uma adaptação de [Keep a Changelog](https://keepachangelog.com
   `libisoburn1`, `libburn4`, `libisofs6` e `libjte2`.
 - Commit de código da Fase 0 `89a60b5` e teste de clone limpo aprovado.
 - Licença MIT (`LICENSE`) incorporada do repositório remoto por merge.
-- Remote `origin` configurado para `https://github.com/alexandresantosrn/SimpleOS.git`,
-  sem push executado.
+- Remote `origin` configurado para `https://github.com/alexandresantosrn/SimpleOS.git`;
+  push inicial executado manualmente em 21/10/2026.
 
 ### Alterado
 - README atualizado com a Fase 0 concluída, comandos disponíveis e XORRISO
