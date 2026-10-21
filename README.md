@@ -95,6 +95,11 @@ Fase 1. As evidências da Fase 0 estão em `docs/evidence/phase-0/`.
 - `docs/evidence/phase-0/`: evidências verificáveis da Fase 0.
 - `CHANGELOG.md`: histórico de mudanças.
 
+## Licença
+
+O SimpleOS é distribuído sob a licença MIT. Consulte [`LICENSE`](LICENSE).
+Os avisos de terceiros estão em `docs/THIRD_PARTY.md`.
+
 ## Regras de segurança
 
 - Validar o boot no QEMU antes de testar em hardware.

@@ -157,23 +157,27 @@ Para cada decisão, documente:
 
 ## ADR-0011 — Licença do projeto
 
-**Estado:** Pendente
+**Estado:** Aprovada
 
-**Contexto:** o projeto ainda não tem licença definida.
+**Contexto:** o projeto precisa de uma licença clara antes de distribuir código ou imagens. O repositório remoto já possui um `LICENSE` MIT com copyright de 2026 de Alexandre Dantas.
 
-**Decisão proposta:** definir uma licença permissiva antes de distribuir código ou imagens; sugerir BSD-2-Clause para compatibilidade com o Limine.
+**Decisão:** adotar a licença MIT para o código do SimpleOS, mantendo o arquivo `LICENSE` na raiz. A licença permite uso, modificação, distribuição e sublicenciamento, desde que o aviso de copyright e a permissão sejam preservados.
 
-**Consequências:** sem licença, o status de distribuição permanece indefinido.
+**Alternativas:** BSD-2-Clause, alinhada ao Limine e igualmente permissiva; Apache-2.0, com concessão explícita de patentes e mais obrigações de aviso; GPL-3.0, com copyleft e exigência de abertura de derivados.
+
+**Consequências:** MIT é uma licença de código aberto aprovada pela OSI e reconhecida como livre pela FSF (identificador SPDX `MIT`), simples e compatível com a distribuição do Limine sob BSD-2-Clause. Ela não impõe copyleft, não inclui concessão explícita de patentes e não concede direitos de marca. A compatibilidade e os avisos de terceiros continuam documentados em `docs/THIRD_PARTY.md`.
+
+**Evidência:** `LICENSE` MIT incorporado pelo merge `e2b39af`; análise registrada nesta decisão e em `docs/THIRD_PARTY.md`.
 
 ## ADR-0012 — Commits e publicação
 
 **Estado:** Aprovada para commit local; push pendente de autorização
 
-**Contexto:** a Fase 0 e suas atualizações documentais foram revisadas e são mantidas em commit local, sem remote configurado.
+**Contexto:** a Fase 0 está em commits locais. O remote `origin` foi configurado e o `LICENSE` remoto foi incorporado por merge; o push será executado manualmente pelo usuário.
 
-**Decisão:** manter a Fase 0 em commit local e deixar push/publicação sujeitos a autorização separada.
+**Decisão:** manter os commits locais e deixar o push/publicação sob controle manual, sem automação e sem execução pelo agente.
 
-**Consequências:** as evidências têm o identificador do commit de código `89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b` e o clone limpo foi validado. A documentação e as evidências foram adicionadas em commit local separado. Nenhum push foi feito.
+**Consequências:** o commit de código `89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b` e o merge `e2b39af` estão no histórico local; o clone limpo foi validado. O `origin/main` ainda aponta para o commit remoto anterior, e nenhum push foi feito. As adaptações documentais de licença estão no working tree e precisam ser commitadas antes do push manual.
 
 ## Decisões pendentes
 
@@ -188,5 +192,6 @@ Para cada decisão, documente:
 - [x] Formato da imagem inicial. — ISO híbrida BIOS/UEFI aprovada para a Fase 1.
 - [ ] Procedimento de boot USB físico. — Fase 8.
 - [x] Instalação do XORRISO. — `xorriso 1.5.4-2` instalado e verificado.
-- [ ] Licença do projeto. — ADR-0011.
-- [x] Commit inicial e teste de clone limpo. — commit de código `89a60b5`; clone limpo aprovado; push pendente.
+- [x] Licença do projeto. — MIT; `LICENSE` na raiz.
+- [x] Commit inicial e teste de clone limpo. — commit de código `89a60b5`; clone limpo aprovado.
+- [ ] Push para `origin` — manual, pendente de execução pelo usuário.

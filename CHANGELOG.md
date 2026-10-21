@@ -30,12 +30,16 @@ O formato segue uma adaptação de [Keep a Changelog](https://keepachangelog.com
 - XORRISO 1.5.4-2 instalado com autorização, com as dependências
   `libisoburn1`, `libburn4`, `libisofs6` e `libjte2`.
 - Commit de código da Fase 0 `89a60b5` e teste de clone limpo aprovado.
+- Licença MIT (`LICENSE`) incorporada do repositório remoto por merge.
+- Remote `origin` configurado para `https://github.com/alexandresantosrn/SimpleOS.git`,
+  sem push executado.
 
 ### Alterado
 - README atualizado com a Fase 0 concluída, comandos disponíveis e XORRISO
   instalado.
 - Documentação de build, decisões, roadmap, plano de testes, terceiros e
   depuração atualizada com o XORRISO 1.5.4-2 e o teste de clone limpo.
+- README, ADR-0011 e `docs/THIRD_PARTY.md` atualizados para a licença MIT.
 
 ### Corrigido
 - Removida a alegação de fallback documentado para Limine 12.9.3, que não

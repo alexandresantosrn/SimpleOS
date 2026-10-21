@@ -50,5 +50,10 @@ componentes do ambiente hospedeiro e não são distribuídas com o kernel.
 
 ## Licença do SimpleOS
 
-A licença do código do SimpleOS ainda não foi definida. Essa decisão está
-pendente e deve ser tomada antes de distribuir o projeto ou imagens.
+O código do SimpleOS é distribuído sob a licença **MIT**, com copyright de
+2026 de Alexandre Dantas. O texto completo está em [`LICENSE`](../LICENSE).
+
+A MIT é permissiva e compatível com a distribuição do Limine sob BSD-2-Clause.
+Os avisos de copyright e licença de componentes de terceiros continuam
+necessários e estão documentados neste arquivo. A licença do projeto não
+concede direitos de marca nem uma concessão explícita de patentes.
