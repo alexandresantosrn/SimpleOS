@@ -1,0 +1,46 @@
+xorriso -as mkisofs -R -r -J \
+  -b boot/limine/limine-bios-cd.bin -no-emul-boot \
+  -boot-load-size 4 -boot-info-table \
+  -hfsplus -apm-block-size 2048 \
+  --efi-boot boot/limine/limine-uefi-cd.bin \
+  -efi-boot-part --efi-boot-image --protective-msdos-label \
+  "build/iso_root" -o "build/simpleos.iso"
+xorriso 1.5.4 : RockRidge filesystem manipulator, libburnia project.
+
+Drive current: -outdev 'stdio:build/simpleos.iso'
+Media current: stdio file, overwriteable
+Media status : is blank
+Media summary: 0 sessions, 0 data blocks, 0 data, 94.2g free
+Added to ISO image: directory '/'='/home/bzaum/projetos/simpleos/build/iso_root'
+xorriso : UPDATE :      10 files added in 1 seconds
+xorriso : UPDATE :      10 files added in 1 seconds
+ISO image produced: 2122 sectors
+Written to medium : 2122 sectors at LBA 0
+Writing to 'stdio:build/simpleos.iso' completed successfully.
+
+Physical block size of 512 bytes.
+Installing to GPT. Logical block size of 512 bytes.
+Detected ISOHYBRID with a GUID partition table (GPT).
+Converting to MBR for improved compatibility...
+Conversion successful.
+No active partition found, some systems may not boot.
+Setting partition 1 as active to work around the issue...
+Installing to MBR.
+Stage 2 to be located at byte offset 0x1000.
+Reminder: Remember to copy the limine-bios.sys file in either
+          the root, /boot, /limine, or /boot/limine directories of
+          one of the partitions on the device, or boot will fail!
+Limine BIOS stages installed successfully.
+xorriso 1.5.4 : RockRidge filesystem manipulator, libburnia project.
+
+xorriso : NOTE : Loading ISO image tree from LBA 0
+xorriso : UPDATE :      11 nodes read in 1 seconds
+xorriso : NOTE : Detected El-Torito boot information which currently is set to be discarded
+Drive current: -indev 'build/simpleos.iso'
+Media current: stdio file, overwriteable
+Media status : is written , is appendable
+Boot record  : El Torito , MBR cyl-align-off
+Media summary: 1 session, 2122 data blocks, 4244k data, 94.2g free
+Volume id    : 'ISOIMAGE'
+ISO: build/simpleos.iso
+build/simpleos.iso: ISO 9660 CD-ROM filesystem data (DOS/MBR boot sector) 'ISOIMAGE' (bootable)

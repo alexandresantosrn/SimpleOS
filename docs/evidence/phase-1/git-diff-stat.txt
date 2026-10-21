@@ -1,0 +1,29 @@
+# Snapshot anterior ao commit da Fase 1 — 21/10/2026
+# Este arquivo registra o diff e o status antes do commit local.
+
+$ git diff --stat
+ CHANGELOG.md         |  23 +++++-
+ Makefile             | 195 +++++++++++++++++++++++++++++++++++++++++++++------
+ README.md            |  67 +++++++++++-------
+ docs/ARCHITECTURE.md |  83 ++++++++++------------
+ docs/BUILD.md        | 150 +++++++++++++++++++++++++++++----------
+ docs/DEBUGGING.md    |  49 ++++++++++---
+ docs/DECISIONS.md    |  81 +++++++++++++++++++--
+ docs/ROADMAP.md      |  33 ++++++---
+ docs/TEST_PLAN.md    |  31 +++++++-
+ 9 files changed, 556 insertions(+), 156 deletions(-)
+
+$ git status --short
+ M CHANGELOG.md
+ M Makefile
+ M README.md
+ M docs/ARCHITECTURE.md
+ M docs/BUILD.md
+ M docs/DEBUGGING.md
+ M docs/DECISIONS.md
+ M docs/ROADMAP.md
+ M docs/TEST_PLAN.md
+?? config/
+?? docs/evidence/phase-1/
+?? src/
+?? tools/test-boot.sh

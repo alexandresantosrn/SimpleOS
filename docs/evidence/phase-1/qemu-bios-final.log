@@ -1,0 +1,47 @@
+vbe: Initialising...
+vbe: Version: 3.0
+vbe: OEM: SeaBIOS VBE(C) 2011
+vbe: Graphics vendor: SeaBIOS Developers
+vbe: Product name: SeaBIOS VBE Adapter
+vbe: Product revision: Rev. 1
+edid: Success.
+vbe: EDID detected screen resolution of 1024x768
+vbe: Found matching mode 0x144, attempting to set...
+vbe: Framebuffer address: 0xfd000000
+edid: Success.
+limine: Loading executable `boot():/boot/limine/kernel.elf`...
+limine: Physical base:   0x7ff4a000
+limine: Virtual base:    0xffffffff80000000
+limine: Slide:           0x0
+limine: ELF entry point: 0xffffffff80001000
+limine: Base revision:   6
+limine: Requests count:  2
+limine: Top of HHDM:     0x80000000
+vbe: Initialising...
+vbe: Version: 3.0
+vbe: OEM: SeaBIOS VBE(C) 2011
+vbe: Graphics vendor: SeaBIOS Developers
+vbe: Product name: SeaBIOS VBE Adapter
+vbe: Product revision: Rev. 1
+edid: Success.
+vbe: EDID detected screen resolution of 1024x768
+vbe: Found matching mode 0x144, attempting to set...
+vbe: Mode was already set, perfect!
+vbe: Framebuffer address: 0xfd000000
+edid: Success.
+acpi: Found RSDP at 0xf59f0
+acpi: Found RSDP at 0xf59f0
+acpi: Found "FACP" at 0x7ffe20a1
+acpi: Found SMBIOS 32-bit entry point at 0xf5a10
+paging: 1GiB pages are supported!
+acpi: Found RSDP at 0xf59f0
+acpi: "DMAR" not found
+acpi: Found RSDP at 0xf59f0
+acpi: "IVRS" not found
+acpi: Found RSDP at 0xf59f0
+acpi: Found "APIC" at 0x7ffe2195
+[simpleos] SimpleOS Phase 1
+[simpleos] base revision: 6
+[simpleos] Limine: Limine 12.9.4
+[simpleos] Firmware: BIOS
+[simpleos] SIMPLEOS_PHASE1_OK

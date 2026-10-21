@@ -7,12 +7,26 @@ O formato segue uma adaptação de [Keep a Changelog](https://keepachangelog.com
 ## [Não lançado]
 
 ### Planejado
-- Validar inicialização mínima pelo Limine no QEMU.
 - Implementar terminal, teclado e shell.
 - Implementar sistema de arquivos em memória.
 - Investigar persistência em disco virtual.
 
 ### Adicionado
+- Kernel mínimo freestanding em `src/main.c`, com entrada `kernel_main`,
+  requisições Limine (base revision 6, bootloader info e firmware type) e
+  parada controlada.
+- Saída serial COM1 em `src/serial.c`/`src/serial.h`.
+- Linker script `src/linker.ld` para ELF64 `ET_EXEC` não-PIE em
+  `0xffffffff80000000`, com `.limine_requests` preservada.
+- Configuração `config/limine.conf` com `paging_mode: 4level`.
+- Alvos `kernel`, `iso`, `run`, `run-uefi`, `debug`, `test-boot-bios`,
+  `test-boot-uefi`, `test-boot-negative` e `test-phase1` no `Makefile`.
+- Harness `tools/test-boot.sh` com captura serial, timeout, repetibilidade e
+  teste negativo.
+- ISO híbrida BIOS/UEFI gerada com XORRISO e `limine bios-install`.
+- Boot validado no QEMU em BIOS, BIOS repetido e UEFI/OVMF, com o marcador
+  `SIMPLEOS_PHASE1_OK`.
+- Evidências em `docs/evidence/phase-1/`.
 - Esqueleto inicial da documentação do projeto.
 - `.gitignore` para artefatos de build e arquivos locais.
 - `Makefile` com alvos de verificação de ambiente, aquisição do Limine,
@@ -39,11 +53,18 @@ O formato segue uma adaptação de [Keep a Changelog](https://keepachangelog.com
   instalado.
 - Documentação de build, decisões, roadmap, plano de testes, terceiros e
   depuração atualizada com o XORRISO 1.5.4-2 e o teste de clone limpo.
+- README, arquitetura, build, roadmap, plano de testes, decisões e depuração
+  atualizados com os resultados reais da Fase 1.
+- `make test` preservado para a Fase 0; `make test-phase1` adicionado para
+  build, BIOS, UEFI, repetibilidade e cenário negativo.
 - README, ADR-0011 e `docs/THIRD_PARTY.md` atualizados para a licença MIT.
 
 ### Corrigido
 - Removida a alegação de fallback documentado para Limine 12.9.3, que não
   possuía procedimento correspondente.
+- Linker script corrigido para manter `.limine_requests` como seção própria,
+  gravável e entre os marcadores do protocolo.
+- Validação da ISO corrigida para usar `xorriso -find -exec lsdl`.
 
 ### Segurança
 - Nenhuma mudança registrada.

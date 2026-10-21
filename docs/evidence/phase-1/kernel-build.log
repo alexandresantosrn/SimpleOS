@@ -1,0 +1,11 @@
+gcc -std=gnu11 -O2 -g -Wall -Wextra -ffreestanding -fno-stack-protector -fno-stack-clash-protection -fno-common -fno-PIC -fno-pie -ffunction-sections -fdata-sections -m64 -march=x86-64 -mno-red-zone -mcmodel=kernel -mno-mmx -mno-sse -mno-80387 -fcf-protection=none -nostdinc -isystem /usr/lib/gcc/x86_64-linux-gnu/11/include -Isrc -Ithird_party/limine-protocol/include -c src/main.c -o build/obj/main.o
+gcc -std=gnu11 -O2 -g -Wall -Wextra -ffreestanding -fno-stack-protector -fno-stack-clash-protection -fno-common -fno-PIC -fno-pie -ffunction-sections -fdata-sections -m64 -march=x86-64 -mno-red-zone -mcmodel=kernel -mno-mmx -mno-sse -mno-80387 -fcf-protection=none -nostdinc -isystem /usr/lib/gcc/x86_64-linux-gnu/11/include -Isrc -Ithird_party/limine-protocol/include -c src/serial.c -o build/obj/serial.o
+ld -nostdlib -static -no-pie -m elf_x86_64 -z max-page-size=0x1000 -z noexecstack --build-id=none -T src/linker.ld -Map build/kernel.map -o build/kernel.elf build/obj/main.o build/obj/serial.o
+
+Kernel: build/kernel.elf
+build/kernel.elf: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, with debug_info, not stripped
+  Class:                             ELF64
+  Type:                              EXEC (Executable file)
+  Machine:                           Advanced Micro Devices X86-64
+  Entry point address:               0xffffffff80001000
+OK: nenhum símbolo indefinido no kernel.

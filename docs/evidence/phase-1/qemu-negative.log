@@ -1,0 +1,19 @@
+vbe: Initialising...
+vbe: Version: 3.0
+vbe: OEM: SeaBIOS VBE(C) 2011
+vbe: Graphics vendor: SeaBIOS Developers
+vbe: Product name: SeaBIOS VBE Adapter
+vbe: Product revision: Rev. 1
+edid: Success.
+vbe: EDID detected screen resolution of 1024x768
+vbe: Found matching mode 0x144, attempting to set...
+vbe: Framebuffer address: 0xfd000000
+edid: Success.
+limine: Loading executable `boot():/boot/limine/kernel-missing.elf`...
+[31mPANIC[37;1m[0m: limine: Failed to open executable with path `boot():/boot/limine/kernel-missing.elf`. Is the path correct?
+Stacktrace:
+  [0x12b5d] <panic+0xa0>
+  [0x41704] <limine_load+0x84>
+  [0x3fa22] <boot+0xa2>
+  [0x3efdd] <_menu+0x174d>
+End of trace. Press a key to return to menu.

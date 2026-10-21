@@ -1,0 +1,2 @@
+b388adb400b010c92fd78e8a16f511a7d0b9c0e5dbc70fb5ec089adb0c2b35c8  build/kernel.elf
+c812f9a955b3bf57ea5063f443abf8186116e7b3cd35718f9babfe43588ca71d  build/simpleos.iso

@@ -2,7 +2,11 @@
 
 Sistema operacional educacional x86-64, desenvolvido majoritariamente em C, com inicialização pelo Limine e testes iniciais no QEMU.
 
-> **Estado atual:** Fase 0 concluída em 20/10/2026. A estrutura de build, a verificação de ambiente, a pinagem do Limine e as ferramentas de imagem estão preparadas. A Fase 1 ainda não foi iniciada; o kernel não foi implementado e nenhum boot de kernel foi validado.
+> **Estado atual:** Fase 0 concluída em 20/10/2026; Fase 1 concluída em
+> 21/10/2026. O SimpleOS já possui um kernel mínimo x86-64 carregado pelo
+> Limine, com diagnóstico pela serial COM1 e boot validado no QEMU em BIOS e
+> UEFI. A Fase 1 está registrada em commit local; o push para o remoto
+> permanece pendente e depende de autorização.
 
 ## Objetivos
 
@@ -30,22 +34,23 @@ Sistema operacional educacional x86-64, desenvolvido majoritariamente em C, com 
 ## Arquitetura pretendida
 
 ```text
-Firmware UEFI
+Firmware BIOS/UEFI
     |
     v
-Limine
+Limine 12.9.4
     |
     v
 Kernel SimpleOS
-    ├── Inicialização e diagnóstico
-    ├── Gerenciamento de memória
-    ├── Terminal e entrada
-    ├── Shell e parser
-    ├── Sistema de arquivos
-    └── Driver de armazenamento
+    ├── Inicialização e diagnóstico serial
+    ├── Gerenciamento de memória (fase futura)
+    ├── Terminal e entrada (fase futura)
+    ├── Shell e parser (fase futura)
+    ├── Sistema de arquivos (fase futura)
+    └── Driver de armazenamento (fase futura)
 ```
 
-A arquitetura é uma proposta inicial e deve ser atualizada quando decisões técnicas forem validadas.
+A arquitetura evolui conforme as fases são validadas. A Fase 1 cobre apenas
+boot, diagnóstico serial mínimo e parada controlada do kernel.
 
 ## Requisitos e ferramentas
 
@@ -61,26 +66,37 @@ As versões verificadas e os comandos exatos estão em `docs/BUILD.md`. O ambien
 
 Não presuma que as versões disponíveis no sistema hospedeiro são compatíveis sem verificar.
 
-## Compilar e executar
-
-**Fase 0:** os comandos abaixo funcionam para verificar o ambiente, baixar o
-Limine e compilar o smoke test. Eles não criam kernel nem imagem inicializável.
+## Compilar, gerar a imagem e executar
 
 ```sh
-make                  # verifica o ambiente e compila o smoke test
-make test             # equivalente a check-env + smoke
-make check-env        # verifica ferramentas e versões
-make limine           # baixa, verifica e compila o Limine fixado
-make smoke            # compila o objeto freestanding de teste
-make check-image-tools # verifica XORRISO e ferramentas de imagem
-make clean            # remove artefatos gerados conhecidos
+make                  # Fase 0: verifica o ambiente e compila o smoke test
+make test             # Fase 0: check-env + smoke
+make kernel           # compila e valida build/kernel.elf
+make iso              # gera e valida build/simpleos.iso
+make run              # inicia a ISO no QEMU via BIOS
+make run-uefi         # inicia a ISO no QEMU via UEFI/OVMF
+make debug            # inicia o QEMU parado para GDB
+make test-phase1      # Fase 0 + build + BIOS + UEFI + negativo
+make test-boot-bios   # somente o teste de boot BIOS
+make test-boot-uefi   # somente o teste de boot UEFI
+make test-boot-negative # teste com caminho de kernel inválido
 ```
 
-Os alvos `kernel`, `iso`, `run`, `run-uefi` e `debug` pertencem à Fase 1 e
-ainda não estão implementados. Eles falham com uma mensagem explícita.
+O kernel emite o diagnóstico pela serial COM1. Nos alvos de teste, o QEMU usa
+`-serial file:` e o log fica em `build/logs/`. A mensagem de sucesso procurada
+é:
 
-Consulte `docs/BUILD.md` para detalhes, limitações e o fluxo previsto da
-Fase 1. As evidências da Fase 0 estão em `docs/evidence/phase-0/`.
+```text
+SIMPLEOS_PHASE1_OK
+```
+
+O alvo padrão `make` e o alvo `make test` continuam com o comportamento da
+Fase 0. Os testes da Fase 1 exigem `make kernel`/`make iso` e são executados
+separadamente por `make test-phase1`.
+
+Consulte `docs/BUILD.md` para os comandos detalhados. As evidências da Fase 0
+estão em `docs/evidence/phase-0/`; as da Fase 1, em
+`docs/evidence/phase-1/`.
 
 ## Documentação
 
@@ -93,6 +109,7 @@ Fase 1. As evidências da Fase 0 estão em `docs/evidence/phase-0/`.
 - `docs/BUILD.md`: comandos exatos, versões e artefatos de build.
 - `docs/THIRD_PARTY.md`: versões, hashes e licenças de terceiros.
 - `docs/evidence/phase-0/`: evidências verificáveis da Fase 0.
+- `docs/evidence/phase-1/`: evidências de build, ISO e boot da Fase 1.
 - `CHANGELOG.md`: histórico de mudanças.
 
 ## Licença

@@ -65,21 +65,21 @@ Registre:
 
 Corrija a causa inicial antes de tentar resolver erros em cascata.
 
-## 8. Ambiente e problemas conhecidos (Fase 0)
+## 8. Ambiente e problemas conhecidos (Fases 0 e 1)
 
-### 8.1 XORRISO instalado
+### 8.1 XORRISO e geração da ISO
 
 O `xorriso 1.5.4-2` foi instalado com autorização em 20/10/2026. O comando
-`make check-image-tools` agora termina com
-`Resultado: OK — requisitos verificados.` A ISO híbrida ainda não foi gerada;
-qualquer falha de geração ou de boot pertence à Fase 1 e deve ser registrada
-com o comando exato e o log correspondente.
+`make check-image-tools` termina com
+`Resultado: OK — requisitos verificados.` Na Fase 1, `make iso` gerou
+`build/simpleos.iso` e `limine bios-install` concluiu com sucesso. Logs em
+`docs/evidence/phase-1/`.
 
 ### 8.2 GCC com PIE e `-mcmodel=kernel`
 
 O GCC do Ubuntu é configurado com PIE por padrão. A flag `-mcmodel=kernel`
-falha sem `-fno-pie`/`-fno-PIC`; o `Makefile` inclui ambas. Na linkagem será
-necessário também `-no-pie`.
+falha sem `-fno-pie`/`-fno-PIC`; o `Makefile` inclui ambas. A linkagem usa
+também `-no-pie` e produziu um `ET_EXEC` válido em `0xffffffff80000000`.
 
 ### 8.3 Localização do `readelf`
 
@@ -106,6 +106,39 @@ do sistema.
 Se o SHA-256 do tarball não conferir, não extraia nem use o arquivo. Remova o
 tarball corrompido de `build/downloads/` e execute `make limine` novamente.
 Não substitua o hash por um valor obtido de fonte não confiável.
+
+### 8.7 Requisições Limine fora de `.limine_requests`
+
+**Sintoma:** a primeira linkagem terminou, mas `readelf -S` não mostrava uma
+seção `.limine_requests`; as requisições estavam diluídas em `.data`.
+
+**Causa:** o linker script original coletava as seções de entrada dentro de
+`.data`, sem criar uma seção de saída com o nome esperado.
+
+**Correção:** criar uma seção de saída `.limine_requests`, com `ALIGN(8)` e
+`KEEP`, contendo os marcadores de início/fim e as requisições; ela permanece no
+segmento gravável. O início de `.text` também foi afastado dos cabeçalhos ELF
+com `SIZEOF_HEADERS`.
+
+**Regressão:** `make kernel` verifica a seção; `objdump -s -j .limine_requests`
+e os boots BIOS/UEFI confirmam que o Limine processa as requisições.
+
+### 8.8 `xorriso -find -print` não existe
+
+**Sintoma:** a validação da ISO falhou com
+`-find[ix]: unknown option '-print'`.
+
+**Correção:** usar `xorriso -indev <iso> -find / -type f -exec lsdl` e filtrar
+a saída. A ISO em si já havia sido gerada e o `bios-install` concluído; o erro
+era apenas da verificação.
+
+### 8.9 Saída serial no QEMU
+
+Os testes automatizados usam `-serial file:build/logs/<nome>.log` para não
+misturar a serial com a saída do monitor. Os alvos interativos usam
+`-serial stdio`. No UEFI, o log pode conter sequências ANSI do OVMF antes das
+mensagens do kernel; a busca pelo marcador `SIMPLEOS_PHASE1_OK` continua
+válida.
 
 ## 9. Registro de incidentes
 

@@ -81,7 +81,10 @@ Para cada decisão, documente:
 
 **Alternativas:** instalar Clang/LLD 14 ou uma toolchain cruzada `x86_64-elf`.
 
-**Consequências:** menos dependências e uso direto do ambiente disponível; a linkagem real e eventuais helpers de compilador ainda precisam ser validados na Fase 1/2.
+**Consequências:** menos dependências e uso direto do ambiente disponível; a
+linkagem real foi validada na Fase 1 e não gerou símbolos indefinidos.
+Eventuais helpers de compilador para operações mais complexas continuam a ser
+observados nas próximas fases.
 
 **Evidência:** `make check-env`, `make smoke` e logs em `docs/evidence/phase-0/`.
 
@@ -153,7 +156,9 @@ Para cada decisão, documente:
 
 **Consequências:** a ISO é o caminho oficial mais simples para o primeiro boot; exige o pacote `xorriso 1.5.4-2`, que foi instalado com autorização. A aprovação não valida a ISO: geração e boot continuam sendo testes da Fase 1.
 
-**Evidência:** `xorriso 1.5.4-2`, `make check-image-tools` aprovado e teste de clone limpo em `docs/evidence/phase-0/`.
+**Evidência:** `xorriso 1.5.4-2`, `make check-image-tools` aprovado e teste de
+clone limpo em `docs/evidence/phase-0/`; na Fase 1, `make iso`,
+`limine bios-install` e boot BIOS/UEFI em `docs/evidence/phase-1/`.
 
 ## ADR-0011 — Licença do projeto
 
@@ -179,12 +184,80 @@ Para cada decisão, documente:
 
 **Consequências:** o push inicial publicou `2c222b1`, que era o `HEAD` local na ocasião. O upstream está configurado e a árvore de trabalho estava limpa após o push. O clone limpo foi validado e o commit de código `89a60b57abb53b3f25ab9f899fcd14f3e5b5c02b` permanece no histórico. Nenhuma automação de push foi criada.
 
+## ADR-0013 — Formato e linkedição do kernel
+
+**Estado:** Aprovada para a Fase 1
+
+**Contexto:** o kernel precisa ser carregado pelo Limine em modo x86-64 e usar
+`-mcmodel=kernel`, que não é compatível com PIE baixo.
+
+**Decisão:** gerar um ELF64 `ET_EXEC` não-PIE, carregado em
+`0xffffffff80000000`, com entrada `kernel_main` definida pelo linker script.
+A linkagem usa `ld -nostdlib -static -no-pie -m elf_x86_64`,
+`-z max-page-size=0x1000`, `-z noexecstack`, `--build-id=none` e
+`-T src/linker.ld`. A seção `.limine_requests` fica em segmento gravável,
+entre os marcadores de início e fim, e é preservada por `KEEP`.
+
+**Alternativas:** usar PIE e deixar o Limine aplicar slide, como no exemplo de
+teste do Limine; usar `limine_entry_point_request` em vez da entrada ELF.
+
+**Consequências:** endereço virtual determinístico e alinhado ao
+`-mcmodel=kernel`; o linker script precisa manter as requisições e os
+marcadores. Não há ASLR nesta fase.
+
+**Evidência:** `make kernel`; `readelf -h/-l/-S`, `nm -u`; logs de boot BIOS e
+UEFI em `docs/evidence/phase-1/`.
+
+## ADR-0014 — Diagnóstico mínimo da Fase 1
+
+**Estado:** Aprovada para a Fase 1
+
+**Contexto:** o objetivo da Fase 1 exige comprovar a execução do kernel, mas
+framebuffer, terminal e logs estruturados pertencem às fases seguintes.
+
+**Decisão:** implementar somente uma saída serial mínima em COM1 (`0x3F8`,
+115200 8N1, polling), com mensagens de boot e o marcador
+`SIMPLEOS_PHASE1_OK`. Sem interrupções, buffers, níveis de log ou terminal.
+Após a mensagem, o kernel executa `cli; hlt` em laço.
+
+**Alternativas:** desenhar texto no framebuffer (antecipa a Fase 3); usar a
+porta de debug do QEMU (menos portável); não emitir mensagem (não atende ao
+objetivo).
+
+**Consequências:** o boot é verificável por log serial sem antecipar a
+arquitetura do terminal. A saída não aparece em uma tela gráfica nesta fase.
+
+**Evidência:** `build/logs/phase1-bios-run1.log`,
+`build/logs/phase1-bios-run2.log`, `build/logs/phase1-uefi.log` e
+`docs/evidence/phase-1/`.
+
+## ADR-0015 — Paginação inicial de quatro níveis
+
+**Estado:** Aprovada para a Fase 1
+
+**Contexto:** o Limine pode escolher cinco níveis em CPUs que suportam LA57;
+a Fase 1 não gerencia páginas e precisa de uma base determinística.
+
+**Decisão:** configurar `paging_mode: 4level` no `config/limine.conf`. O kernel
+não modifica as tabelas de página nesta fase.
+
+**Alternativas:** deixar o Limine escolher o maior modo suportado; fixar cinco
+níveis.
+
+**Consequências:** baseline simples e reproduzível. O gerenciamento de memória
+da Fase 2 deverá revisar essa escolha se precisar de mais espaço de endereço.
+
+**Evidência:** `config/limine.conf`; boot BIOS e UEFI em
+`docs/evidence/phase-1/`.
+
 ## Decisões pendentes
 
 - [x] Versão exata do Limine e protocolo utilizado. — v12.9.4, base revision 6.
 - [x] Toolchain e alvo de compilação. — GCC 11.4.0, x86_64-linux-gnu, freestanding.
-- [ ] Linker script e formato do kernel. — Fase 1.
-- [ ] Saída serial e terminal por framebuffer. — Fase 2/3.
+- [x] Linker script e formato do kernel. — ELF64 `ET_EXEC` não-PIE; ADR-0013.
+- [x] Saída serial mínima da Fase 1. — COM1; ADR-0014. Terminal por
+  framebuffer e logs estruturados continuam para a Fase 2/3.
+- [x] Paginação inicial. — quatro níveis; ADR-0015.
 - [ ] Estratégia inicial de teclado. — Fase 4.
 - [ ] Gerenciamento de memória. — Fase 2.
 - [ ] Interface de bloco e dispositivo virtual. — Fase 7.

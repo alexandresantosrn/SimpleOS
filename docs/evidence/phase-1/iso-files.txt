@@ -1,0 +1,6 @@
+-r--r--r--    1 0        0          385024 Oct 21 17:36 '/EFI/BOOT/BOOTX64.EFI'
+-r-xr-xr-x    1 0        0           21392 Oct 21 17:36 '/boot/limine/kernel.elf'
+-r--r--r--    1 0        0           26624 Oct 21 17:36 '/boot/limine/limine-bios-cd.bin'
+-r--r--r--    1 0        0          339788 Oct 21 17:36 '/boot/limine/limine-bios.sys'
+-r--r--r--    1 0        0         3145728 Oct 21 17:36 '/boot/limine/limine-uefi-cd.bin'
+-r--r--r--    1 0        0             170 Oct 21 17:36 '/boot/limine/limine.conf'

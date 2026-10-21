@@ -29,8 +29,8 @@ Para cada execução relevante, registrar:
 |---|---|---|---|
 | 0 | Verificação das ferramentas | Versões e dependências registradas | Aprovado |
 | 0 | Build em clone limpo | Reproduzível conforme README | Aprovado no commit de código `89a60b5` |
-| 1 | Boot pelo Limine no QEMU | Kernel mostra mensagem inicial | Não executado |
-| 1 | Caminho de kernel incorreto | Erro identificável; não declarar sucesso | Não executado |
+| 1 | Boot pelo Limine no QEMU | Kernel mostra mensagem inicial | Aprovado em BIOS e UEFI (T1.4/T1.6) |
+| 1 | Caminho de kernel incorreto | Erro identificável; não declarar sucesso | Aprovado; marcador ausente (T1.7) |
 | 2 | Registro do mapa de memória | Informações válidas, sem acesso indevido | Não executado |
 | 2 | Falha controlada | Diagnóstico identificável | Não executado |
 | 3 | Texto e quebra de linha | Saída legível | Não executado |
@@ -66,13 +66,38 @@ XORRISO 1.5.4-2.
 | T0.8 | Alvos da Fase 1 | `make kernel`, `make iso`, `make run`, `make run-uefi`, `make debug` (cada um separadamente) | Falha clara, sem implementação | Exit 2 com mensagem | Aprovado | `phase1-targets.log` |
 | T0.9 | Ferramentas de imagem | `make check-image-tools` | Todas presentes | `Resultado: OK — requisitos verificados.` | Aprovado | `check-image-tools-after-xorriso.log` |
 | T0.10 | Clone limpo | `git clone` + `make test`, `make check-image-tools`, `make limine`, `limine version` | Mesmo resultado | Commit de código `89a60b5`; todos os alvos passaram; `Limine 12.9.4` | Aprovado | `clean-clone-phase0.log` |
-| T0.11 | Boot do Limine no QEMU | ISO + QEMU | Menu/boot do Limine | Não executado: Fase 1 não iniciada; nenhuma ISO gerada | Não executado | — |
+| T0.11 | Boot do Limine no QEMU | ISO + QEMU | Menu/boot do Limine | Não executado na Fase 0; coberto pelos testes T1.4–T1.6 | Não executado na Fase 0 | — |
 | T0.12 | Inicialização do QEMU sem mídia | `timeout 8s qemu-system-x86_64 ...` | Processo inicia e é encerrado | Exit 124 por timeout; não valida boot | Informativo | `qemu-bios-smoke.log` |
 | T0.13 | Instalação do XORRISO | `command -v xorriso`, `xorriso --version`, `dpkg-query` | Ferramenta e dependências instaladas | `xorriso 1.5.4-2`; dependências presentes | Aprovado | `xorriso-installed.log` |
 
 **Conclusão:** a Fase 0 está concluída no commit de código `89a60b5`. O smoke test valida
 compilação freestanding, mas não valida linkedição, linker script, geração de
 ISO ou boot; esses itens pertencem à Fase 1.
+
+### 3.2 Resultados da Fase 1 — 21/10/2026
+
+Ambiente: Ubuntu 22.04.5 LTS, x86-64, GCC 11.4.0, binutils 2.38,
+GNU Make 4.3, Git 2.34.1, QEMU 6.2.0, GDB 12.1, OVMF 2022.02,
+XORRISO 1.5.4-2. Limine 12.9.4. QEMU com `q35`, 2 GiB, KVM e `-cpu host`.
+Identificador: árvore de trabalho derivada do commit base `0add865`; o commit
+local da Fase 1 foi criado depois dos testes, sem push.
+
+| ID | Teste | Comando | Esperado | Observado | Estado | Evidência |
+|---|---|---|---|---|---|---|
+| T1.1 | Build do kernel | `make kernel` | Exit 0; sem símbolos indefinidos | ELF64 gerado; `nm -u` vazio | Aprovado | `kernel-build.log` |
+| T1.2 | Formato e requisições | `file`, `readelf -h/-l/-S`, `nm -u` | `ET_EXEC`, high half, `.limine_requests` | Entrada `0xffffffff80001000`; LOAD em `0xffffffff80000000`; seção presente; sem indefinidos | Aprovado | `kernel-readelf.log` |
+| T1.3 | ISO híbrida | `make iso` | ISO gerada; arquivos presentes; `bios-install` OK | ISO 9660/MBR bootável; 6 arquivos exigidos presentes; instalação BIOS OK | Aprovado | `iso-build.log`, `iso-files.txt` |
+| T1.4 | Boot BIOS | `make test-boot-bios` | Marcador de sucesso | `SIMPLEOS_PHASE1_OK`; `Firmware: BIOS` | Aprovado | `qemu-bios-run1.log` |
+| T1.5 | Repetibilidade BIOS | `make test-boot-bios` (segunda execução) | Mesmo marcador | `SIMPLEOS_PHASE1_OK` na linha 47 | Aprovado | `qemu-bios-run2.log` |
+| T1.6 | Boot UEFI/OVMF | `make test-boot-uefi` | Mesmo marcador | `SIMPLEOS_PHASE1_OK`; `Firmware: UEFI` | Aprovado | `qemu-uefi.log` |
+| T1.7 | Caminho inválido | `make test-boot-negative` | Erro identificável; sem marcador | Limine `PANIC: Failed to open executable`; marcador ausente | Aprovado | `qemu-negative.log` |
+| T1.8 | Regressão e documentação | `make test`, `make check-image-tools` | Testes da Fase 0 passam; docs atualizadas | Ambos exit 0; documentação e evidências atualizadas | Aprovado | `phase0-test.log`, `phase0-image-tools.log` |
+| T1.9 | Agregado da Fase 1 | `make test-phase1` | Build, Fase 0 e três cenários de boot aprovados | Executado após rebuild limpo | Aprovado | `phase1-test.log` |
+
+**Conclusão:** a Fase 1 atende aos critérios T1.1–T1.9 no QEMU. O teste
+negativo comprova que o marcador não é produzido quando o kernel não pode ser
+carregado. A validação não cobre hardware físico, framebuffer, teclado, shell,
+sistema de arquivos, IDT própria ou gerenciamento de memória.
 
 ## 4. Testes de parser e sistema de arquivos
 

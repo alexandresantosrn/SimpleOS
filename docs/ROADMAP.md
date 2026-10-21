@@ -1,6 +1,6 @@
 # Roadmap do SimpleOS
 
-**Estado atual:** Fase 0 concluída em 20/10/2026; Fase 1 não iniciada.
+**Estado atual:** Fase 0 concluída em 20/10/2026; Fase 1 concluída em 21/10/2026.
 
 ## Estados permitidos
 
@@ -25,7 +25,7 @@ Uma fase só pode ser marcada como concluída quando seus critérios de aceite f
 - [x] Criar estrutura do projeto e documentação.
   - Estrutura inicial, `Makefile`, scripts, smoke test e documentação criados.
 - [x] Definir alvos de build/test/run/clean no Makefile.
-  - Alvos da Fase 0 implementados; alvos da Fase 1 reservados e bloqueados.
+  - Alvos da Fase 0 implementados; alvos da Fase 1 adicionados na fase seguinte.
 - [x] Documentar comandos exatos.
   - `docs/BUILD.md` e `README.md` atualizados.
 
@@ -33,7 +33,7 @@ Uma fase só pode ser marcada como concluída quando seus critérios de aceite f
 
 **Critério operacional registrado:** a Fase 0 cobre toolchain, estrutura,
 Limine, smoke test e documentação; a geração de imagem e o boot de kernel
-pertencem à Fase 1. O aceite foi atendido com:
+pertenciam à Fase 1. O aceite foi atendido com:
 
 - XORRISO 1.5.4-2 instalado com autorização explícita;
 - `make check-image-tools` e `make test` aprovados;
@@ -41,21 +41,34 @@ pertencem à Fase 1. O aceite foi atendido com:
 - clone limpo validado com `make test`, `make check-image-tools`, `make limine`
   e `limine version`.
 
-A ISO híbrida ainda não foi gerada e o boot de kernel continua sendo aceite da
-Fase 1.
+A ISO híbrida não foi gerada na conclusão da Fase 0; a geração e o boot de
+kernel foram implementados e validados na Fase 1.
 
 **Evidências:** `docs/evidence/phase-0/`.
 
 ## Fase 1 — Boot mínimo
 
+**Estado:** Concluída em 21/10/2026; commit local, push não realizado.
+
 **Objetivo:** carregar um kernel x86-64 pelo Limine.
 
-- [ ] Configurar protocolo e requisições necessárias.
-- [ ] Criar linker script e ponto de entrada.
-- [ ] Produzir imagem inicializável.
-- [ ] Iniciar no QEMU e obter mensagem de sucesso.
+- [x] Configurar protocolo e requisições necessárias.
+  - Base revision 6, bootloader info e firmware type; marcadores de requisições.
+- [x] Criar linker script e ponto de entrada.
+  - ELF64 `ET_EXEC` não-PIE em `0xffffffff80000000`; entrada `kernel_main`.
+- [x] Produzir imagem inicializável.
+  - ISO híbrida BIOS/UEFI com Limine 12.9.4 e `limine bios-install`.
+- [x] Iniciar no QEMU e obter mensagem de sucesso.
+  - BIOS, repetição BIOS e UEFI/OVMF produziram `SIMPLEOS_PHASE1_OK`;
+    o teste negativo não produziu o marcador.
 
 **Aceite:** inicialização repetível no QEMU, com evidência de log.
+
+**Limitações:** diagnóstico exclusivamente serial; sem terminal, teclado,
+shell, sistema de arquivos, IDT própria ou gerenciamento de memória. A
+validação foi feita somente no QEMU, não em hardware físico.
+
+**Evidências:** `docs/evidence/phase-1/`.
 
 ## Fase 2 — Diagnóstico e infraestrutura básica
 
@@ -146,7 +159,7 @@ Fase 1.
 | Fase | Estado | Evidência / observações |
 |---|---|---|
 | 0 — Ambiente | Concluída | Commit de código `89a60b5`; clone limpo e XORRISO 1.5.4-2 aprovados; evidências em `docs/evidence/phase-0/` |
-| 1 — Boot mínimo | Não iniciada | |
+| 1 — Boot mínimo | Concluída | Kernel ELF64 em high half; BIOS, BIOS repetido, UEFI/OVMF e negativo testados; evidências em `docs/evidence/phase-1/` |
 | 2 — Diagnóstico | Não iniciada | |
 | 3 — Terminal | Não iniciada | |
 | 4 — Teclado | Não iniciada | |

@@ -1,0 +1,16 @@
+# Snapshot anterior ao commit da Fase 1 — 21/10/2026
+# Este arquivo registra o estado da árvore antes do commit local.
+
+ M CHANGELOG.md
+ M Makefile
+ M README.md
+ M docs/ARCHITECTURE.md
+ M docs/BUILD.md
+ M docs/DEBUGGING.md
+ M docs/DECISIONS.md
+ M docs/ROADMAP.md
+ M docs/TEST_PLAN.md
+?? config/
+?? docs/evidence/phase-1/
+?? src/
+?? tools/test-boot.sh

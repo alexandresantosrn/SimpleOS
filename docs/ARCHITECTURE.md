@@ -1,6 +1,6 @@
 # Arquitetura do SimpleOS
 
-**Estado:** proposta inicial; decisões ainda precisam ser validadas por protótipo.
+**Estado:** Fase 1 validada em 21/10/2026 para boot mínimo, diagnóstico serial e ISO híbrida. Componentes de memória, terminal, entrada, shell e armazenamento continuam pendentes.
 
 ## 1. Objetivo arquitetural
 
@@ -9,31 +9,33 @@ Manter o kernel pequeno e dividido em componentes com responsabilidades claras. 
 ## 2. Fluxo de inicialização
 
 ```text
-Firmware UEFI
+Firmware BIOS/UEFI
     |
     v
-Limine
+Limine 12.9.4
     |
     v
-Ponto de entrada do kernel
+Ponto de entrada do kernel (kernel_main)
     |
     v
-Inicialização mínima
-    ├── validar informações recebidas do boot
-    ├── configurar diagnóstico
-    ├── inicializar subsistemas necessários
-    └── iniciar terminal/shell quando disponíveis
+Inicialização mínima da Fase 1
+    ├── validar base revision do protocolo
+    ├── configurar serial COM1
+    ├── emitir diagnóstico de boot
+    └── parar o processador
 ```
 
 O firmware inicia o bootloader; o Limine lê sua configuração e carrega o kernel compatível com o protocolo selecionado. O firmware não interpreta diretamente o arquivo `limine.conf`.
 
-## 3. Componentes propostos
+## 3. Componentes
 
 ### Boot e inicialização
 Responsável pelo ponto de entrada, requisições do protocolo Limine e passagem segura para a inicialização do kernel.
 
 ### Diagnóstico
-Oferece logs simples, inicialmente por saída serial no QEMU, além de um caminho de falha fatal.
+Na Fase 1, fornece saída serial mínima em COM1 para comprovar o boot. Logs
+estruturados, níveis de severidade e caminho de falha fatal pertencem à Fase 2.
+O terminal por framebuffer pertence à Fase 3.
 
 ### Memória
 Interpreta o mapa de memória recebido no boot e fornece as primitivas de alocação que forem necessárias. A interface e o algoritmo ainda serão decididos.
@@ -71,54 +73,41 @@ Shell
                 Driver de dispositivo
 ```
 
-### 4.1 Fluxo de build da Fase 0
-
-A Fase 0 prepara o caminho de build, mas não implementa o kernel:
+### 4.1 Fluxo de build atual
 
 ```text
-fontes C freestanding (smoke test)
+src/main.c + src/serial.c + src/linker.ld
         |
         v
-objeto ELF64 x86-64
+build/kernel.elf (ELF64 ET_EXEC não-PIE)
         |
         v
-(inspeção com file/readelf/nm)
-
-Limine 12.9.4 fixado
-        |
-        v
-build/limine-binary/ (utilitário + arquivos de boot)
-```
-
-O fluxo completo da Fase 1 será:
-
-```text
-src/ + linker script
-        |
-        v
-build/kernel.elf
-        |
-        v
-build/iso_root/ + Limine
+build/iso_root/ + Limine 12.9.4
         |
         v
 build/simpleos.iso (BIOS + UEFI)
         |
         v
-QEMU
+QEMU BIOS / QEMU UEFI
 ```
 
-Decisões já fixadas para a Fase 0:
+O kernel é validado com `file`, `readelf` e `nm`. A ISO é validada pela lista
+de arquivos e pelo boot nos dois firmwares.
+
+Decisões fixadas para as Fases 0 e 1:
 
 - GCC 11.4.0 nativo, alvo `x86_64-linux-gnu`, modo freestanding.
 - Limine 12.9.4, base revision 6, binário verificado por SHA-256.
 - Header do protocolo no commit `3a0526b700e356f0eac1b71a77697b3fd1c707a3`.
 - QEMU 6.2.0 com `q35`, SeaBIOS e OVMF.
-- ISO híbrida BIOS/UEFI como estratégia proposta; XORRISO ainda ausente.
-
-O kernel será carregado nos 2 GiB superiores, em `0xffffffff80000000`, com
-`-mcmodel=kernel` e linker script próprio. A linkagem e o ponto de entrada
-serão definidos e testados somente na Fase 1.
+- ISO híbrida BIOS/UEFI com XORRISO 1.5.4-2 e `limine bios-install`.
+- Kernel ELF64 `ET_EXEC` não-PIE em `0xffffffff80000000`, com
+  `-mcmodel=kernel`, linker script próprio e entrada `kernel_main`.
+- Requisições Limine em `.limine_requests`, entre marcadores, em segmento
+  gravável: base revision 6, bootloader info e firmware type.
+- Paginação inicial de quatro níveis configurada no `limine.conf`.
+- Diagnóstico mínimo pela serial COM1; sem framebuffer na Fase 1.
+- Parada do kernel com `cli; hlt` após a mensagem de sucesso.
 
 ## 5. Restrições
 
@@ -128,13 +117,15 @@ serão definidos e testados somente na Fase 1.
 - Não assumir que suporte a boot por USB fornece suporte a armazenamento USB dentro do sistema operacional.
 - Não assumir que um driver testado no QEMU funciona em todo hardware físico.
 
-## 6. Decisões em aberto
+## 6. Decisões e pendências
 
 Registrar decisões aprovadas em `DECISIONS.md`, incluindo:
-- Versão e protocolo do Limine. — resolvido na Fase 0: 12.9.4, base revision 6.
-- Toolchain e formato do kernel. — resolvido na Fase 0: GCC freestanding, ELF64.
-- Configuração do linker. — pendente para a Fase 1.
-- Método de saída de diagnóstico. — pendente para a Fase 2.
+- Versão e protocolo do Limine. — resolvido: 12.9.4, base revision 6.
+- Toolchain e formato do kernel. — resolvido: GCC freestanding, ELF64 `ET_EXEC`.
+- Configuração do linker. — resolvido na Fase 1: ADR-0013.
+- Método de saída de diagnóstico. — resolvido na Fase 1: serial COM1 mínima
+  (ADR-0014); framebuffer e logs estruturados permanecem para a Fase 2/3.
+- Paginação inicial. — resolvido na Fase 1: quatro níveis (ADR-0015).
 - Backend inicial do terminal. — pendente para a Fase 3.
 - Entrada de teclado inicial. — pendente para a Fase 4.
 - Modelo de memória. — pendente para a Fase 2.
